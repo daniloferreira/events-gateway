@@ -4,4 +4,5 @@ export default class EventInfo {
   'x-forwarded-for': string;
   'event-type': string;
   'event-name': string;
+  'custom-data': any;
 }
