@@ -1,5 +1,6 @@
-import {Controller, Get} from '@nestjs/common';
+import {Body, Controller, Get, Headers, Put, Request} from '@nestjs/common';
 import {AppService} from './app.service';
+import EventInfo from './model/EventInfo';
 
 @Controller()
 export class AppController {
@@ -10,8 +11,16 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/testing')
-  testingGet(): string {
-    return this.appService.testingGet();
+  @Put('/emit')
+  emit(@Headers('user-agent') agent,
+       @Headers('x-forwarded-for') forwardedForIp,
+       @Request() request,
+       @Body() eventInfo): string {
+    const clientData = {
+      'user-agent': agent,
+      'x-forwarded-for': forwardedForIp,
+      'remote-address': request.ip,
+    };
+    return JSON.stringify(this.appService.emit(Object.assign(eventInfo, clientData) as EventInfo));
   }
 }

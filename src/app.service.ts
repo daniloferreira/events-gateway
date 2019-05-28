@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import EventInfo from './model/EventInfo';
 
 @Injectable()
 export class AppService {
@@ -6,7 +7,7 @@ export class AppService {
     return 'Hello World!';
   }
 
-  testingGet(): string {
-    return 'you get it';
+  emit(event: EventInfo): EventInfo {
+    return event;
   }
 }
